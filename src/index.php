@@ -16,10 +16,38 @@ Namespace PublicationDate;
  * @return string Returns the filtered post date for the current post wrapped inside "time" tags.
  */
 function render_block( $attributes, $content, $block ) {
-    return sprintf(
-        '<div>%s</div>',
-        'hi there'
-    );
+    $prepend        = get_post_meta( get_the_ID(), 'publication_date_prepend_text', true );
+    $format         = get_post_meta( get_the_ID(), 'publication_date_format', true );
+    $display_date   = get_the_date( $format );
+    $attribute_date = get_the_date();
+    $display_modified  = get_post_meta( get_the_ID(), 'publication_date_display_modified_date', true );
+    if ( $display_modified ) {
+        $modified_display   = get_the_modified_date( $format );
+        $modified_attribute = get_the_modified_date();
+    }
+
+    ob_start();
+    ?>
+    <div class='block-publication-date'>
+        <div class='publication-date-post-date'>
+            <?php if ( $prepend ): ?>
+                <span class='publication-date-preprend'><?php echo esc_html( $prepend ); ?></span>
+            <?php endif; ?>
+            <time datetime="<?php echo esc_attr( $attribute_date ); ?>">
+                <?php echo esc_html( $display_date ); ?>
+            </time>
+        </div>
+        <?php if ( $display_modified ): ?>
+            <div class='publication-date-updated'>
+                <span class='publication-date-prepend'><?php echo __( 'Updated on', 'publication-date' ) ?></span>
+                <time datetime="<?php echo esc_attr( $modified_attribute ); ?>">
+                    <?php echo esc_html( $modified_display ); ?>
+                </time>
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php
+    return ob_get_clean();
 }
 
 /**

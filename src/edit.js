@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RadioControl, TextControl } from '@wordpress/components';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, RadioControl, TextControl, ToggleControl } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { dateI18n, __experimentalGetSettings as getDateSettings } from '@wordpress/date';
@@ -43,6 +43,11 @@ const Edit = () => {
     publication_date_format: newFormat,
   });
 
+  const updateDisplayModified = (newValue) => setMeta({
+    ...meta,
+    publication_date_display_modified_date: newValue,
+  });
+
   return (
     <>
       <InspectorControls>
@@ -58,16 +63,21 @@ const Edit = () => {
             value={prependText}
             onChange={(newValue) => updatePrependText(newValue)}
           />
+          <ToggleControl
+            label={__('Show modified date', 'publication-date')}
+            checked={displayModified}
+            onChange={() => updateDisplayModified(!displayModified)}
+          />
         </PanelBody>
       </InspectorControls>
-      <div className="block-publication-date">
+      <div {...useBlockProps()}>
         <div className="publication-date-post-date">
           {prependText && <span className="publication-date-prepend">{ prependText }</span>}
           {prependText && '\u00a0'}
           <time dateTime={postDate}>{dateI18n(dateFormat, postDate)}</time>
         </div>
         {displayModified && (
-          <div className="publication-date-updated">
+          <div className="publication-date-modified-date">
             <span className="publication-date-prepend">{__('Updated on', 'publication-date')}</span>
             &nbsp;
             <time dateTime={modifiedDate}>{ dateI18n(dateFormat, modifiedDate) }</time>

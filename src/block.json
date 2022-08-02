@@ -1,0 +1,10 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "publication-date/publication-date",
+    "title": "Publication Date",
+    "category": "text",
+    "icon": "smile",
+    "textdomain": "publication-date",
+    "editorScript": "file:./index.js"
+}

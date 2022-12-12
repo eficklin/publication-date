@@ -3,6 +3,8 @@ This plugin was created to demonstrate a possible approach to block development 
 
 Let's get to it. This little block of questionable utility stems from a client request made before the post date block existed. (It was introduced into core with version 5.9 and full-site editing.) In the right context, it might still have its uses. Regardless, it makes for a tidy little package to demonstrate an approach to block development.
 
+This plugin was developed against the current, as of this writing, version of WP (6.1.1). Only source code has been committed to this repository. You'll want to install dependencies and then run the build script (`npm run build`) before activating the plugin in the WP dashboard.
+
 ## Usage
 Drop this block into a post via your preferred method and, voila, there's the post date. There are some minor adjustments to be had in the sidebar to control display: the site's default date setting; a handful of other common format choices; arbitrary text to prepend; and a toggle to add/remove the post's modified date. Unlike core's post date block, this block does not allow you to adjust the underlying post date.
 
